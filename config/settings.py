@@ -37,8 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.shop.apps.ShopConfig'
+    'django.contrib.sites',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'apps.shop.apps.ShopConfig',
 ]
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'apps.auth.serializers.CustomRegisterSerializer',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,9 +58,35 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # для стандартной аутентификации
+    'allauth.account.auth_backends.AuthenticationBackend',  # для allauth
+)
+
+SITE_ID = 1  # требуется для django.contrib.sites
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # или 'mandatory' в зависимости от ваших требований
+ACCOUNT_AUTHENTICATION_METHOD = 'username'  # или 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+DJANGO_REST_AUTH = {
+    'REGISTER_SERIALIZER': 'myapp.serializers.CustomRegisterSerializer',  # Если используете кастомные сериализаторы
+}
 
 TEMPLATES = [
     {

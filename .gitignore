@@ -1,4 +1,4 @@
-# venv
+# env
 venv/
 .env
 *.pyc
@@ -26,9 +26,6 @@ static/
 
 # media
 media/
-
-# env
-.env
 
 # node
 node_modules/
