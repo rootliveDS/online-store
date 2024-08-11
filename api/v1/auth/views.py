@@ -1,5 +1,4 @@
-from dj_rest_auth.registration.views import RegisterView
-from rest_framework.response import Response
+from dj_rest_auth.registration.views import LoginView, RegisterView
 from rest_framework import status
 
 class CustomRegisterView(RegisterView):
@@ -9,3 +8,4 @@ class CustomRegisterView(RegisterView):
             response.status_code = status.HTTP_201_CREATED
             response.data = {"detail": "Registration successful"}
         return response
+

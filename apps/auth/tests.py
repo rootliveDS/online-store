@@ -10,34 +10,19 @@ def api_client():
     return APIClient()
 
 
-# @pytest.mark.django_db
-# def test_registration(api_client):
-#     url = reverse('rest_register')
-#     data = {
-#         'username': 'testuser',
-#         'email': 'testuser@example.com',
-#         'password1': 'TestPassword123',
-#         'password2': 'TestPassword123'
-#     }
-#     response = api_client.post(url, data)
-#     assert response.status_code == status.HTTP_201_CREATED
-#     assert User.objects.filter(username='testuser').exists()
-
-
 @pytest.mark.django_db
 def test_registration(api_client):
-    url = '/api/auth/registration/'
+    url = reverse('rest_register')
     data = {
         'username': 'testuser',
+        'email': 'testuser@example.com',
         'password1': 'TestPassword123',
-        'password2': 'TestPassword123',
-        'email': 'testuser@example.com'
+        'password2': 'TestPassword123'
     }
-    response = api_client.post(url, data, format='json')  # Убедитесь, что формат указан
-    print("Response status code:", response.status_code)
-    print("Response data:", response.data)
+    response = api_client.post(url, data)
     assert response.status_code == status.HTTP_201_CREATED
     assert User.objects.filter(username='testuser').exists()
+
 
 
 @pytest.mark.django_db
